@@ -5,14 +5,15 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 public class User {
-       @Id @GeneratedValue
+       @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
  
-       private Integer id;
+       private Long id;
     private String name;
     private String email;
 
@@ -25,14 +26,14 @@ public class User {
     private Review review;
     @JoinColumn(referencedColumnName = "id")
     private List<Review> reviews;
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
 
 
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
