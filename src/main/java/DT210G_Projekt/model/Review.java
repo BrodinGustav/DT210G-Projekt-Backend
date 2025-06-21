@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 
@@ -16,12 +17,11 @@ public class Review {
     private String bookId; // Google Books ID
 
     @ManyToOne
+    @JoinColumn(name = "user_id") // Namnet på kolumnen i Review-tabellen
     private User user;
 
     private String reviewText;
-
     private int rating;
-
     private LocalDateTime createdAt;
 
     public Long getId() {

@@ -1,15 +1,19 @@
 package DT210G_Projekt.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
+@Entity
 public class User {
        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
  
@@ -21,11 +25,11 @@ public class User {
       @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Undviker att lösenordet inkluderas i JSON-svaret
     private String password;
 
-    //Relationer
-    @ManyToOne
-    private Review review;
-    @JoinColumn(referencedColumnName = "id")
-    private List<Review> reviews;
+    //Relationer (En användare kan ha flera recensioner)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+
+
     public Long getId() {
         return id;
     }
@@ -54,12 +58,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Review getReview() {
-        return review;
-    }
-    public void setReview(Review review) {
-        this.review = review;
-    }
     public List<Review> getReviews() {
         return reviews;
     }
@@ -78,7 +76,6 @@ public class User {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((review == null) ? 0 : review.hashCode());
         result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
         return result;
     }
@@ -115,11 +112,6 @@ public class User {
                 return false;
         } else if (!password.equals(other.password))
             return false;
-        if (review == null) {
-            if (other.review != null)
-                return false;
-        } else if (!review.equals(other.review))
-            return false;
         if (reviews == null) {
             if (other.reviews != null)
                 return false;
@@ -133,8 +125,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", review="
-                + review + ", reviews=" + reviews + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", reviews=" + reviews + "]";
     }
 
 
