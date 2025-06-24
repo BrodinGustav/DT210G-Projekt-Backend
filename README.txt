@@ -1,44 +1,63 @@
-## Inlogg 
+#POST /auth/login
 
+URL: http://localhost:8080/auth/login
+Method: POST
+Body (JSON):
 
 {
   "username": "user",
   "password": "password"
 }
 
-#Token används vid åtkomst till skyddade endpoints
+Respons:
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5..."
+}
 
-#GET
-http://localhost:8080/api/books/search?query=Harry Potter (Du kan byta ut värdet på query till vilken sökterm du vill)
+----------------------------
 
+#BookController – Böcker
 
-Böcker
-Hämta böcker via sökning:
-GET /api/books/search?query=valfriSökterm
-Exempel: /api/books/search?query=Harry+Potter
+GET /api/books/search?query=java
+URL: http://localhost:8080/api/books/search?query=java
+Method: GET
+Auth: ❌ Ingen token krävs
 
-Hämta en specifik bok:
-GET /api/books/{bookId}
-Exempel: /api/books/zyTCAlFPjgYC (Google Books ID)
+GET /api/books/{id}
+Exempel:
+http://localhost:8080/api/books/zyTCAlFPjgYC
+Method: GET
+Auth: ❌ Ingen token krävs
 
-Recensioner
-Hämta recensioner för en specifik bok:
-http://localhost:8080/api/reviews/book/{bookId}
+ GET /api/books/{bookId}/reviews
+Exempel:
+http://localhost:8080/api/books/zyTCAlFPjgYC/reviews
+Method: GET
+Auth: ❌ Ingen token krävs
 
-Skapa en ny recension (autentisering krävs):
-POST /api/reviews (med recension i body + userId i header)
+----------------------------------
 
-Uppdatera en recension (autentisering krävs):
-PUT /api/reviews/{reviewId}
+#/api/reviews
+Alla endpoints börjar med http://localhost:8080/api/reviews.
 
-Ta bort en recension (autentisering krävs):
-DELETE /api/reviews/{reviewId}
+POST /api/reviews
 
+http://localhost:8080/api/reviews
+Kräver JWT
 
+ Body (JSON):
+{
+  "bookId": "zyTCAlFPjgYC",
+  "rating": 5,
+  "comment": "Fantastisk bok!"
+}
 
-GET /api/books/zyTCAlFPjgYC/reviews hämtar både bokinfo och recensioner
+Hämta recensioner för en viss bok
+GET /api/reviews/book/{bookId}
+http://localhost:8080/api/reviews/book/zyTCAlFPjgYC
+ Auth: ❌ Nej 
 
-GET /api/books/zyTCAlFPjgYC hämtar bara bokinfo (utan recensioner)
-
-GET /api/books/search?query=... söker böcker
-
+ Radera en recension
+DELETE /api/reviews/{id}
+http://localhost:8080/api/reviews/1
+Kräver JWT

@@ -22,7 +22,7 @@ public class JWTUtil {
 
     public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(username) //username är epost
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -34,7 +34,7 @@ public class JWTUtil {
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject();
+                .getSubject(); //email som sattes i generateToken
     }
 
     public boolean validateToken(String token, String username) {

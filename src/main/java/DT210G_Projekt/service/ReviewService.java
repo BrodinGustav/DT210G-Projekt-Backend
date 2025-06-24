@@ -8,6 +8,6 @@ public interface ReviewService {
     List<Review> getReviewsForBook(String bookId);
     List<Review> getReviewsByUser(String userId);
     Review saveReview(Review review);
-    void deleteReview(Long reviewId, String userId);
+    void deleteReview(Long reviewId, Long userId);
 }
 

@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,18 +30,14 @@ public class ReviewController {
     private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO,
-            @RequestHeader("userId") String userId) {
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO, Authentication authentication) {
 
-        Long id;
-        try {
-            id = Long.parseLong(userId);
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Ogiltigt användar-ID: " + userId);
-        }
+        String username = authentication.getName();
 
-        User user = userRepository.findById(Long.parseLong(userId))
-                .orElseThrow(() -> new RuntimeException("Användare med ID " + userId + " hittades inte"));
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Användare med användarnamn " + username + " hittades inte"));
+
+        System.out.println("Söker användare med email: " + username);
 
         // Skapa Review-entity från DTO
         Review review = new Review();
@@ -68,7 +64,12 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteReview(@PathVariable Long id, @RequestHeader("userId") String userId) {
-        reviewService.deleteReview(id, userId);
+    public void deleteReview(@PathVariable Long id, Authentication authentication) {
+        String username = authentication.getName();
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Användare ej hittad"));
+
+        reviewService.deleteReview(id, user.getId());
     }
 }

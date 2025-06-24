@@ -24,7 +24,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthRequestDTO request) {
         // Hårdkodat användarnamn och lösenord 
         if ("user".equals(request.getUsername()) && "password".equals(request.getPassword())) {
-            String token = jwtUtil.generateToken(request.getUsername());
+            String token = jwtUtil.generateToken(request.getEmail());
             return ResponseEntity.ok(new AuthResponse(token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

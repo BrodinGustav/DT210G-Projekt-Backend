@@ -37,7 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
    @Override
-public void deleteReview(Long reviewId, String userId) {
+public void deleteReview(Long reviewId, Long userId) {
     Review review = reviewRepository.findById(reviewId)
         .orElseThrow(() -> new NoSuchElementException("Recension med id " + reviewId + " finns inte."));
     
