@@ -3,6 +3,7 @@ package DT210G_Projekt.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import DT210G_Projekt.dto.ReviewDTO;
 import DT210G_Projekt.model.Review;
 import DT210G_Projekt.model.User;
 import DT210G_Projekt.repository.UserRepository;
@@ -25,16 +27,39 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @Autowired
-private UserRepository userRepository;
+    private UserRepository userRepository;
 
     @PostMapping
-    public Review createReview(@RequestBody Review review, @RequestHeader("userId") String userId) {
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO,
+            @RequestHeader("userId") String userId) {
 
-           User user = userRepository.findById(Long.parseLong(userId))
-        .orElseThrow(() -> new RuntimeException("Användare med ID " + userId + " hittades inte"));
+        Long id;
+        try {
+            id = Long.parseLong(userId);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Ogiltigt användar-ID: " + userId);
+        }
 
+        User user = userRepository.findById(Long.parseLong(userId))
+                .orElseThrow(() -> new RuntimeException("Användare med ID " + userId + " hittades inte"));
+
+        // Skapa Review-entity från DTO
+        Review review = new Review();
+        review.setBookId(reviewDTO.getBookId());
+        review.setRating(reviewDTO.getRating());
+        review.setReviewText(reviewDTO.getComment());
         review.setUser(user);
-        return reviewService.saveReview(review);
+
+        // Spara Review
+        Review savedReview = reviewService.saveReview(review);
+
+        // Mappa tillbaka till DTO för respons
+        ReviewDTO savedReviewDTO = new ReviewDTO(
+                savedReview.getBookId(),
+                savedReview.getRating(),
+                savedReview.getReviewText());
+
+        return ResponseEntity.ok(savedReviewDTO);
     }
 
     @GetMapping("/book/{bookId}")
@@ -47,5 +72,3 @@ private UserRepository userRepository;
         reviewService.deleteReview(id, userId);
     }
 }
-
-

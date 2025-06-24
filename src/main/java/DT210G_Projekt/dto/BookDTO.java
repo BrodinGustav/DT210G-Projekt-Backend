@@ -15,6 +15,19 @@ public class BookDTO {
 
  // Getters and Setters
    
+    public BookDTO(String id, String title, String[] authors, String publishedDate, String description,
+            String[] reviews) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.publishedDate = publishedDate;
+        this.description = description;
+        this.reviews = reviews;
+    }
+
+     public BookDTO() {}
+
+
     public String getId() {
         return id;
     }

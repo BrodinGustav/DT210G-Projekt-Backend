@@ -25,7 +25,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getReviewsByUser(String userId) {
-        return reviewRepository.findByUserId(userId);
+        Long id = Long.parseLong(userId);
+        
+        return reviewRepository.findByUserId(id);
     }
 
     @Override

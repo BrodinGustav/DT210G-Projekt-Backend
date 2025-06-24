@@ -25,8 +25,10 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                         .requestMatchers("/api/books/**").permitAll() 
-                         .requestMatchers(HttpMethod.GET, "/api/reviews/book/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/books/*/reviews").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/book/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews").permitAll()
                         .requestMatchers("/api/reviews/**").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

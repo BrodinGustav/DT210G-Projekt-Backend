@@ -10,6 +10,6 @@ import DT210G_Projekt.model.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByBookId(String bookId);
-    List<Review> findByUserId(String userId);
+    List<Review> findByUserId(Long userId);
 }
  

@@ -28,13 +28,19 @@ public class JWTFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
+        String method = request.getMethod();
+
 
         // Lista med endpoints som ska slippa JWT-kontroll
-        if (path.startsWith("/auth/") || path.startsWith("/api/books/")) {
+        boolean isPublicPath = (path.startsWith("/auth/") ||
+                (method.equals("GET") && (path.startsWith("/api/books/") ||
+                        path.startsWith("/api/reviews/book/") ||
+                        path.equals("/api/reviews"))));
+
+        if (isPublicPath) {
             filterChain.doFilter(request, response);
             return;
         }
-
         final String authHeader = request.getHeader("Authorization");
         String username = null;
         String jwt = null;
