@@ -3,10 +3,12 @@ package DT210G_Projekt.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import DT210G_Projekt.dto.ReviewDTO;
 import DT210G_Projekt.model.Review;
 import DT210G_Projekt.repository.ReviewRepository;
 
@@ -19,8 +21,17 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewRepository reviewRepository;
 
     @Override
-    public List<Review> getReviewsForBook(String bookId) {
-        return reviewRepository.findByBookId(bookId);
+    public List<ReviewDTO> getReviewsForBook(String bookId) {
+         List<Review> reviews =  reviewRepository.findByBookId(bookId);
+
+          return reviews.stream()
+        .map(review -> new ReviewDTO(
+            review.getBookId(),
+            review.getRating(),
+            review.getReviewText()
+    //        review.getUser().getEmail() // om ReviewDTO har detta fält aktivt
+        ))
+        .collect(Collectors.toList());
     }
 
     @Override

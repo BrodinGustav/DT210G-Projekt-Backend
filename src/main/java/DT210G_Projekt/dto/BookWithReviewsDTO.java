@@ -10,12 +10,12 @@ public class BookWithReviewsDTO {
     private List<String> authors;
     private String publishedDate;
     private String description;
-    private List<Review> reviews;
+    private List<ReviewDTO> reviews;    //Returnerar ReviewDTO istället för Review för att undvika oändlig JSON-nästning
 
 
     
     public BookWithReviewsDTO(String id, String title, List<String> authors, String publishedDate, String description,
-            List<Review> reviews) {
+            List<ReviewDTO> reviews) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -57,10 +57,10 @@ public class BookWithReviewsDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Review> getReviews() {
+    public List<ReviewDTO> getReviews() {
         return reviews;
     }
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<ReviewDTO> reviews) {
         this.reviews = reviews;
     }
 

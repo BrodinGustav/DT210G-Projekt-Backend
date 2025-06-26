@@ -54,14 +54,17 @@ public class ReviewController {
                 savedReview.getBookId(),
                 savedReview.getRating(),
                 savedReview.getReviewText());
+               // savedReview.getUser().getEmail());
+
+
 
         return ResponseEntity.ok(savedReviewDTO);
     }
 
-    @GetMapping("/book/{bookId}")
-    public List<Review> getReviewsForBook(@PathVariable String bookId) {
+    /*@GetMapping("/book/{bookId}")
+    public List<ReviewDTO> getReviewsForBook(@PathVariable String bookId) {
         return reviewService.getReviewsForBook(bookId);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public void deleteReview(@PathVariable Long id, Authentication authentication) {

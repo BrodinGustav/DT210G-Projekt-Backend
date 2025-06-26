@@ -2,6 +2,7 @@ package DT210G_Projekt.controller;
 
 import DT210G_Projekt.dto.BookDTO;
 import DT210G_Projekt.dto.BookWithReviewsDTO;
+import DT210G_Projekt.dto.ReviewDTO;
 import DT210G_Projekt.model.Review;
 import DT210G_Projekt.service.BookService;
 import DT210G_Projekt.service.ReviewService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/books")
@@ -38,7 +40,17 @@ public class BookController {
         BookDTO googleBook = bookService.getBookById(bookId);
 
         // 2. Hämta recensioner från din databas
-        List<Review> reviews = reviewService.getReviewsForBook(bookId);
+        List<ReviewDTO> reviews = reviewService.getReviewsForBook(bookId);
+
+        // Konvertera till ReviewDTO för att undvika rekursionsproblem
+        List<ReviewDTO> reviewDTOs = reviews.stream()
+                .map(review -> new ReviewDTO(
+                        review.getBookId(),
+                        review.getRating(),
+                        review.getComment()
+                        //review.getUser().getEmail()
+                ))
+                .collect(Collectors.toList());
 
         // 3. Slå ihop till en DTO
         BookWithReviewsDTO dto = new BookWithReviewsDTO();
@@ -47,7 +59,7 @@ public class BookController {
         dto.setAuthors(Arrays.asList(googleBook.getAuthors()));
         dto.setPublishedDate(googleBook.getPublishedDate());
         dto.setDescription(googleBook.getDescription());
-        dto.setReviews(reviews);
+        dto.setReviews(reviewDTOs);
 
         return dto;
     }

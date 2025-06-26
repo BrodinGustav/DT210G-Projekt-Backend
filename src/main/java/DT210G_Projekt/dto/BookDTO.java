@@ -8,7 +8,7 @@ public class BookDTO {
     private String[] authors;
     private String publishedDate;
     private String description;
-    private String[] reviews;
+//    private String[] reviews;
 
 
 
@@ -22,7 +22,7 @@ public class BookDTO {
         this.authors = authors;
         this.publishedDate = publishedDate;
         this.description = description;
-        this.reviews = reviews;
+  //      this.reviews = reviews;
     }
 
      public BookDTO() {}
@@ -58,12 +58,13 @@ public class BookDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String[] getReviews() {
+    /*public String[] getReviews() {
         return reviews;
     }
     public void setReviews(String[] reviews) {
         this.reviews = reviews;
     }
+        */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -73,7 +74,7 @@ public class BookDTO {
         result = prime * result + Arrays.hashCode(authors);
         result = prime * result + ((publishedDate == null) ? 0 : publishedDate.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + Arrays.hashCode(reviews);
+   //     result = prime * result + Arrays.hashCode(reviews);
         return result;
     }
     @Override
@@ -107,14 +108,14 @@ public class BookDTO {
                 return false;
         } else if (!description.equals(other.description))
             return false;
-        if (!Arrays.equals(reviews, other.reviews))
-            return false;
+     //   if (!Arrays.equals(reviews, other.reviews))
+       //     return false;
         return true;
     }
     @Override
     public String toString() {
         return "BookDTO [id=" + id + ", title=" + title + ", authors=" + Arrays.toString(authors) + ", publishedDate="
-                + publishedDate + ", description=" + description + ", reviews=" + Arrays.toString(reviews) + "]";
+                + publishedDate + ", description=" + description /*+ ", reviews=" + Arrays.toString(reviews) + "]"*/;
     }
 
 

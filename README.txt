@@ -61,3 +61,5 @@ http://localhost:8080/api/reviews/book/zyTCAlFPjgYC
 DELETE /api/reviews/{id}
 http://localhost:8080/api/reviews/1
 Kräver JWT
+
+OBS ! Fixa PUT för recensioner ! Och kolla varför reviews nestlas sig !

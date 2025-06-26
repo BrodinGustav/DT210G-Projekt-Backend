@@ -4,11 +4,13 @@ public class ReviewDTO {
     private String bookId;
     private int rating;
     private String comment;
+//     private String userEmail;
  
-    public ReviewDTO(String bookId, int rating, String comment) {
+    public ReviewDTO(String bookId, int rating, String comment /*String userEmail*/) {
         this.bookId = bookId;
         this.rating = rating;
         this.comment = comment;
+     //    this.userEmail = userEmail;
     }
 
        public ReviewDTO(){
@@ -38,6 +40,14 @@ public class ReviewDTO {
            this.comment = comment;
        }
 
+  /*    public String getUserEmail() {
+        return userEmail;
+       }
+
+       public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+       }
+*/
 
 
 }
