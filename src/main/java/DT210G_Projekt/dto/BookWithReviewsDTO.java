@@ -2,8 +2,6 @@ package DT210G_Projekt.dto;
 
 import java.util.List;
 
-import DT210G_Projekt.model.Review;
-
 public class BookWithReviewsDTO {
     private String id;
     private String title;

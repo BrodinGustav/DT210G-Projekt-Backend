@@ -1,12 +1,14 @@
 package DT210G_Projekt.dto;
 
 public class ReviewDTO {
+    private Long id; 
     private String bookId;
     private int rating;
     private String comment;
 //     private String userEmail;
  
-    public ReviewDTO(String bookId, int rating, String comment /*String userEmail*/) {
+    public ReviewDTO(Long id, String bookId, int rating, String comment /*String userEmail*/) {
+        this.id = id;
         this.bookId = bookId;
         this.rating = rating;
         this.comment = comment;
@@ -38,6 +40,14 @@ public class ReviewDTO {
 
        public void setComment(String comment) {
            this.comment = comment;
+       }
+
+       public Long getId() {
+           return id;
+       }
+
+       public void setId(Long id) {
+           this.id = id;
        }
 
   /*    public String getUserEmail() {

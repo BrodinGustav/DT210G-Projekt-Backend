@@ -3,7 +3,6 @@ package DT210G_Projekt.controller;
 import DT210G_Projekt.dto.BookDTO;
 import DT210G_Projekt.dto.BookWithReviewsDTO;
 import DT210G_Projekt.dto.ReviewDTO;
-import DT210G_Projekt.model.Review;
 import DT210G_Projekt.service.BookService;
 import DT210G_Projekt.service.ReviewService;
 
@@ -45,10 +44,11 @@ public class BookController {
         // Konvertera till ReviewDTO för att undvika rekursionsproblem
         List<ReviewDTO> reviewDTOs = reviews.stream()
                 .map(review -> new ReviewDTO(
+                        review.getId(),
                         review.getBookId(),
                         review.getRating(),
                         review.getComment()
-                        //review.getUser().getEmail()
+                // review.getUser().getEmail()
                 ))
                 .collect(Collectors.toList());
 

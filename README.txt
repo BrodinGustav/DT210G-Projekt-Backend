@@ -5,6 +5,7 @@ Method: POST
 Body (JSON):
 
 {
+  "email": "test@example.com",
   "username": "user",
   "password": "password"
 }
@@ -52,14 +53,19 @@ Kräver JWT
   "comment": "Fantastisk bok!"
 }
 
-Hämta recensioner för en viss bok
-GET /api/reviews/book/{bookId}
-http://localhost:8080/api/reviews/book/zyTCAlFPjgYC
- Auth: ❌ Nej 
-
  Radera en recension
 DELETE /api/reviews/{id}
 http://localhost:8080/api/reviews/1
 Kräver JWT
 
-OBS ! Fixa PUT för recensioner ! Och kolla varför reviews nestlas sig !
+Uppdatera en recension
+PUT /api/reviews/{id}
+http://localhost:8080/api/reviews/1
+Kräver JWT
+
+ Body (JSON):
+{
+  "bookId": "zyTCAlFPjgYC",
+  "rating": 5,
+  "comment": "Fantastisk bok!"
+}

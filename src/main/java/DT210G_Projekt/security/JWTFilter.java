@@ -42,21 +42,21 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
         final String authHeader = request.getHeader("Authorization");
-        String username = null;
+        String userEmail = null;
         String jwt = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
-                username = jwtUtil.extractUsername(jwt); //Blir email
+                userEmail = jwtUtil.extractUsername(jwt); //Blir email
             } catch (Exception e) {
                 // token ogiltig
             }
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // Skapa enkel authentication med username (ingen authorities här)
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null,
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userEmail, null,
                     List.of());
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
