@@ -26,6 +26,10 @@ public class BookController {
     // Öppen endpoint – inget login krävs
     @GetMapping("/search")
     public List<BookDTO> searchBooks(@RequestParam String query) {
+
+        //debugg
+         System.out.println("SÖKTRÄFF FRÅN: " + query);
+         
         return bookService.searchBooks(query);
     }
 
