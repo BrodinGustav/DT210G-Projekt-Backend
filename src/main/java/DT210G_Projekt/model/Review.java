@@ -17,17 +17,17 @@ public class Review {
     private String reviewText;
     private int rating;
     private LocalDateTime createdAt;
-    private Long userId;
+    //private Long userId;
 
 
-    public Long getUserId() {
+    /*public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
+*/
     @ManyToOne
     @JoinColumn(name = "user_id") // Namnet på kolumnen i Review-tabellen
     private User user;

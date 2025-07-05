@@ -37,7 +37,8 @@ public class ReviewServiceImpl implements ReviewService {
                         review.getBookId(),
                         review.getRating(),
                         review.getReviewText(),
-                        review.getUserId()
+                        review.getUser() != null ? review.getUser().getId() : null,
+                        review.getUser() != null ? review.getUser().getEmail() : null
                 // review.getUser().getEmail() // om ReviewDTO har detta fält aktivt
                 ))
                 .collect(Collectors.toList());
@@ -95,7 +96,9 @@ public class ReviewServiceImpl implements ReviewService {
         updatedReview.getBookId(),
         updatedReview.getRating(),
         updatedReview.getReviewText(),
-        updatedReview.getUserId()
+        updatedReview.getUser() != null ? review.getUser().getId() : null,
+        updatedReview.getUser() != null ? review.getUser().getEmail() : null
+       // updatedReview.getUserId()
          );
 
     }

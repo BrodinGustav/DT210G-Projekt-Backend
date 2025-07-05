@@ -40,23 +40,12 @@ public class BookController {
 
     @GetMapping("/{bookId}/reviews")
     public BookWithReviewsDTO getBookWithReviews(@PathVariable String bookId) {
+     
         // 1. Hämta bokdata från Google Books API (via service)
         BookDTO googleBook = bookService.getBookById(bookId);
 
         // 2. Hämta recensioner från din databas
-        List<ReviewDTO> reviews = reviewService.getReviewsForBook(bookId);
-
-        // Konvertera till ReviewDTO för att undvika rekursionsproblem
-        List<ReviewDTO> reviewDTOs = reviews.stream()
-                .map(review -> new ReviewDTO(
-                        review.getId(),
-                        review.getBookId(),
-                        review.getRating(),
-                        review.getComment(),
-                        review.getUserId()
-                // review.getUser().getEmail()
-                ))
-                .collect(Collectors.toList());
+        List<ReviewDTO> reviewDTOs = reviewService.getReviewsForBook(bookId);
 
         // 3. Slå ihop till en DTO
         BookWithReviewsDTO dto = new BookWithReviewsDTO();
