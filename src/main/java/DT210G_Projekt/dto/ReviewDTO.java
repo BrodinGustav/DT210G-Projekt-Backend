@@ -5,18 +5,28 @@ public class ReviewDTO {
     private String bookId;
     private int rating;
     private String comment;
-//     private String userEmail;
+    private Long userId;
  
-    public ReviewDTO(Long id, String bookId, int rating, String comment /*String userEmail*/) {
+
+    public ReviewDTO(Long id, String bookId, int rating, String comment, Long userId) {
         this.id = id;
         this.bookId = bookId;
         this.rating = rating;
         this.comment = comment;
-     //    this.userEmail = userEmail;
+        this.userId = userId;
     }
 
        public ReviewDTO(){
     }
+
+        public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
 
        public String getBookId() {
            return bookId;

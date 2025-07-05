@@ -13,16 +13,24 @@ import jakarta.persistence.ManyToOne;
 public class Review {
     @Id @GeneratedValue
     private Long id;
-
     private String bookId; // Google Books ID
+    private String reviewText;
+    private int rating;
+    private LocalDateTime createdAt;
+    private Long userId;
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     @ManyToOne
     @JoinColumn(name = "user_id") // Namnet på kolumnen i Review-tabellen
     private User user;
-
-    private String reviewText;
-    private int rating;
-    private LocalDateTime createdAt;
 
     public Long getId() {
         return id;

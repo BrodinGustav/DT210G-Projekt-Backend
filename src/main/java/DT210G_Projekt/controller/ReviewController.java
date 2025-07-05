@@ -81,7 +81,8 @@ public class ReviewController {
                 savedReview.getId(),
                 savedReview.getBookId(),
                 savedReview.getRating(),
-                savedReview.getReviewText());
+                savedReview.getReviewText(),
+                savedReview.getUserId());
         // savedReview.getUser().getEmail());
 
         // DEBUG 6: Recension sparad

@@ -52,7 +52,8 @@ public class BookController {
                         review.getId(),
                         review.getBookId(),
                         review.getRating(),
-                        review.getComment()
+                        review.getComment(),
+                        review.getUserId()
                 // review.getUser().getEmail()
                 ))
                 .collect(Collectors.toList());
