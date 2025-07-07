@@ -3,6 +3,7 @@ package DT210G_Projekt.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,19 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Optional<ReviewDTO> findById(Long id) {
+        return reviewRepository.findById(id).map(review -> {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setId(review.getId());
+            dto.setBookId(review.getBookId());
+            dto.setComment(review.getReviewText());
+            dto.setRating(review.getRating());
+            dto.setUserEmail(review.getUser().getEmail());
+            return dto;
+        });
+    }
+
+    @Override
     public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NoSuchElementException("Recension med id " + reviewId + " finns inte."));
@@ -89,17 +103,17 @@ public class ReviewServiceImpl implements ReviewService {
         review.setRating(reviewDto.getRating());
         review.setReviewText(reviewDto.getComment());
 
-        Review updatedReview=reviewRepository.save(review);
+        Review updatedReview = reviewRepository.save(review);
 
-         return new ReviewDTO(
-            updatedReview.getId(),
-        updatedReview.getBookId(),
-        updatedReview.getRating(),
-        updatedReview.getReviewText(),
-        updatedReview.getUser() != null ? review.getUser().getId() : null,
-        updatedReview.getUser() != null ? review.getUser().getEmail() : null
-       // updatedReview.getUserId()
-         );
+        return new ReviewDTO(
+                updatedReview.getId(),
+                updatedReview.getBookId(),
+                updatedReview.getRating(),
+                updatedReview.getReviewText(),
+                updatedReview.getUser() != null ? review.getUser().getId() : null,
+                updatedReview.getUser() != null ? review.getUser().getEmail() : null
+        // updatedReview.getUserId()
+        );
 
     }
 }

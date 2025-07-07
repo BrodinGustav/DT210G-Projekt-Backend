@@ -1,11 +1,14 @@
 package DT210G_Projekt.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,7 +87,7 @@ public class ReviewController {
                 savedReview.getReviewText(),
                 savedReview.getUser() != null ? review.getUser().getId() : null,
                 savedReview.getUser() != null ? review.getUser().getEmail() : null);
-              //  savedReview.getUserId());
+        // savedReview.getUserId());
         // savedReview.getUser().getEmail());
 
         // DEBUG 6: Recension sparad
@@ -93,12 +96,13 @@ public class ReviewController {
         return ResponseEntity.ok(savedReviewDTO);
     }
 
-    /*
-     * @GetMapping("/book/{bookId}")
-     * public List<ReviewDTO> getReviewsForBook(@PathVariable String bookId) {
-     * return reviewService.getReviewsForBook(bookId);
-     * }
-     */
+    // Hämta recension via ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {
+        Optional<ReviewDTO> review = reviewService.findById(id);
+        return review.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @DeleteMapping("/{id}")
     public void deleteReview(@PathVariable Long id, Authentication authentication) {

@@ -1,6 +1,7 @@
 package DT210G_Projekt.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 
@@ -13,5 +14,6 @@ public interface ReviewService {
     Review saveReview(Review review);
     void deleteReview(Long reviewId, Long userId);
     ReviewDTO updateReview(Long id, ReviewDTO dto,  Authentication authentication);
+    Optional<ReviewDTO> findById(Long id);
 }
 

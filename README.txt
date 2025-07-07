@@ -43,6 +43,7 @@ Alla endpoints börjar med http://localhost:8080/api/reviews.
 
 POST /api/reviews
 
+Skapa recension
 http://localhost:8080/api/reviews
 Kräver JWT
 
