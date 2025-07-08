@@ -95,7 +95,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new UsernameNotFoundException("Ingen användare hittades"));
 
         // Kontrollera att användaren äger recensionen
-        if (!review.getUser().getId().equals(user.getId())) {
+         if (!review.getUser().getId().equals(user.getId())) {
             throw new AccessDeniedException("Du får inte ändra någon annans recension.");
         }
 

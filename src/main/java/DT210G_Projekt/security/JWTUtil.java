@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
@@ -22,7 +23,7 @@ public class JWTUtil {
 
     public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(username) //username är epost
+                .setSubject(username) // username är epost
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -34,7 +35,7 @@ public class JWTUtil {
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject(); //email som sattes i generateToken
+                .getSubject(); // email som sattes i generateToken
     }
 
     public boolean validateToken(String token, String username) {
@@ -48,5 +49,10 @@ public class JWTUtil {
                 .getBody()
                 .getExpiration();
         return expiration.before(new Date());
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

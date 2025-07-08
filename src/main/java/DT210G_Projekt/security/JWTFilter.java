@@ -2,8 +2,12 @@ package DT210G_Projekt.security;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,9 +21,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
 
-    public JWTFilter(JWTUtil jwtUtil) {
+    public JWTFilter(JWTUtil jwtUtil, @Lazy UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -29,7 +35,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
         String method = request.getMethod();
-
 
         // Lista med endpoints som ska slippa JWT-kontroll
         boolean isPublicPath = (path.startsWith("/auth/") ||
@@ -48,20 +53,29 @@ public class JWTFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
-                userEmail = jwtUtil.extractUsername(jwt); //Blir email
+                userEmail = jwtUtil.extractUsername(jwt); // Blir email
             } catch (Exception e) {
-                // token ogiltig
+                System.out.println("Ogiltig token: " + e.getMessage());
             }
         }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Skapa enkel authentication med username (ingen authorities här)
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userEmail, null,
-                    List.of());
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+
+              UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+  if (jwtUtil.validateToken(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities());
+
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
         filterChain.doFilter(request, response);
 
     }
-}
+            }
+        }
