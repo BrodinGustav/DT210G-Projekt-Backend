@@ -67,6 +67,6 @@ Kräver JWT
  Body (JSON):
 {
   "bookId": "zyTCAlFPjgYC",
-  "rating": 5,
-  "comment": "Fantastisk bok!"
+  "rating": 1,
+  "comment": "Hemsk bok!"
 }

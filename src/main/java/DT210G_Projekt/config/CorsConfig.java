@@ -16,6 +16,7 @@ public class CorsConfig {
                         .allowedOrigins("http://localhost:5173") //frontend-port
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
+                        
             }
         };
     }

@@ -21,9 +21,9 @@ public class JWTUtil {
     byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
     SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 
-    public String generateToken(String username) {
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(username) // username är epost
+                .setSubject(email) //returnerar email från extractUserName()
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -37,10 +37,10 @@ public class JWTUtil {
                 .getBody()
                 .getSubject(); // email som sattes i generateToken
     }
-
-    public boolean validateToken(String token, String username) {
-        return extractUsername(token).equals(username) && !isTokenExpired(token);
-    }
+public boolean validateToken(String token, UserDetails userDetails) {
+    final String username = extractUsername(token);
+    return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+}
 
     private boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
@@ -51,8 +51,5 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
+    
 }

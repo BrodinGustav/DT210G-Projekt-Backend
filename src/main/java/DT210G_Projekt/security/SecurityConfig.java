@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/books/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews/book/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
+
 
                         // Tillåt PUT och DELETE för autentiserade användare
                         .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()

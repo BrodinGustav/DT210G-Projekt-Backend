@@ -108,6 +108,8 @@ public class ReviewController {
     public void deleteReview(@PathVariable Long id, Authentication authentication) {
         String username = authentication.getName();
 
+        System.out.println("AUTH: " + authentication.getName());
+
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("Användare ej hittad"));
 

@@ -33,6 +33,11 @@ public class JWTFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+                if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+    response.setStatus(HttpServletResponse.SC_OK);
+    return;
+}
+
         String path = request.getRequestURI();
         String method = request.getMethod();
 
@@ -74,8 +79,8 @@ public class JWTFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
-        filterChain.doFilter(request, response);
-
     }
+            filterChain.doFilter(request, response);
+
             }
         }

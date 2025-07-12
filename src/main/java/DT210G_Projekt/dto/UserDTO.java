@@ -2,23 +2,23 @@ package DT210G_Projekt.dto;
 
 public class UserDTO {
     private Long userId;
-    private String userEmail;
+    private String email;
 
-    public UserDTO(Long userId, String userEmail) {
+    public UserDTO(Long userId, String email) {
         this.userId = userId;
-        this.userEmail = userEmail;
+        this.email = email;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
     @Override
     public String toString() {
-        return "UserDTO{id=" + userId + ", email='" + userEmail + "'}";
+        return "UserDTO{id=" + userId + ", email='" + email + "'}";
     }
 }
