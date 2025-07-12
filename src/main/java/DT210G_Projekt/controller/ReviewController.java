@@ -120,7 +120,7 @@ public class ReviewController {
     public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDto,
             Authentication authentication) {
         reviewService.updateReview(id, reviewDto, authentication);
-        return ResponseEntity.ok("Recension uppdaterad");
+        return ResponseEntity.ok(reviewDto);
     }
 
 }
