@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import DT210G_Projekt.exceptions.EmailAlreadyExistsException;
 import DT210G_Projekt.model.User;
 import DT210G_Projekt.repository.UserRepository;
 
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
       @Override
     public void register(String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("Mail finns redan registrerad");
+            throw new EmailAlreadyExistsException("E-postadressen är redan registrerad");
         }
 
         User user = new User();
