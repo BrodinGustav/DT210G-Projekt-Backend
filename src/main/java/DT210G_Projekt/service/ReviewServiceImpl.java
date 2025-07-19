@@ -61,7 +61,6 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewMapper.toDTOList(reviews);
     }
 
-
     @Override
     public Review saveReview(Review review) {
         review.setCreatedAt(LocalDateTime.now());
@@ -126,4 +125,13 @@ public class ReviewServiceImpl implements ReviewService {
         );
 
     }
+
+    @Override
+    public List<ReviewDTO> getReviewsByUserEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Användare hittades ej."));
+        List<Review> reviews = reviewRepository.findByUserId(user.getId());
+        return reviewMapper.toDTOList(reviews);
+    }
+
 }

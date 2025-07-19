@@ -70,3 +70,28 @@ Kräver JWT
   "rating": 1,
   "comment": "Hemsk bok!"
 }
+
+Hämta in alla recensioner för inloggad användare
+
+GET /api/reviews/user
+http://localhost:8080/api/reviews/user
+Kräver JWT
+
+[
+  {
+    "id": 102,
+    "bookId": null,
+    "rating": 5,
+    "comment": "hjhjj",
+    "userId": 1,
+    "userEmail": "test@example.com"
+  },
+  {
+    "id": 103,
+    "bookId": null,
+    "rating": 5,
+    "comment": "asd",
+    "userId": 1,
+    "userEmail": "test@example.com"
+  },
+]

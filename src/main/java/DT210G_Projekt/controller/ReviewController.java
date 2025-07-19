@@ -123,10 +123,11 @@ public class ReviewController {
         reviewService.updateReview(id, reviewDto, authentication);
         return ResponseEntity.ok(reviewDto);
     }
-    
-@GetMapping("/user/{userId}")
-public ResponseEntity<List<ReviewDTO>> getReviewsByUser(@PathVariable String userId) {
-    List<ReviewDTO> reviews = reviewService.getReviewsByUser(userId);
+
+@GetMapping("/user")
+public ResponseEntity<List<ReviewDTO>> getReviewsByUser(Authentication authentication) {
+    String email = authentication.getName();
+    List<ReviewDTO> reviews = reviewService.getReviewsByUserEmail(email);
     return ResponseEntity.ok(reviews);
 }
 

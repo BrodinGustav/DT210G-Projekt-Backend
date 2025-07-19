@@ -15,5 +15,6 @@ public interface ReviewService {
     void deleteReview(Long reviewId, Long userId);
     ReviewDTO updateReview(Long id, ReviewDTO dto,  Authentication authentication);
     Optional<ReviewDTO> findById(Long id);
+    List<ReviewDTO> getReviewsByUserEmail(String email);
 }
 
