@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import DT210G_Projekt.dto.ReviewDTO;
+import DT210G_Projekt.mapper.ReviewMapper;
 import DT210G_Projekt.model.Review;
 import DT210G_Projekt.model.User;
 import DT210G_Projekt.repository.ReviewRepository;
@@ -27,6 +28,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private final ReviewMapper reviewMapper;
+
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
+        this.reviewRepository = reviewRepository;
+        this.reviewMapper = reviewMapper;
+    }
 
     @Override
     public List<ReviewDTO> getReviewsForBook(String bookId) {
@@ -46,11 +55,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviewsByUser(String userId) {
+    public List<ReviewDTO> getReviewsByUser(String userId) {
         Long id = Long.parseLong(userId);
-
-        return reviewRepository.findByUserId(id);
+        List<Review> reviews = reviewRepository.findByUserId(id);
+        return reviewMapper.toDTOList(reviews);
     }
+
 
     @Override
     public Review saveReview(Review review) {
@@ -95,7 +105,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new UsernameNotFoundException("Ingen användare hittades"));
 
         // Kontrollera att användaren äger recensionen
-         if (!review.getUser().getId().equals(user.getId())) {
+        if (!review.getUser().getId().equals(user.getId())) {
             throw new AccessDeniedException("Du får inte ändra någon annans recension.");
         }
 

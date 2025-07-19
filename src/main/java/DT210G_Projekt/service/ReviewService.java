@@ -10,7 +10,7 @@ import DT210G_Projekt.model.Review;
 
 public interface ReviewService {
     List<ReviewDTO> getReviewsForBook(String bookId);
-    List<Review> getReviewsByUser(String userId);
+    List<ReviewDTO> getReviewsByUser(String userId);
     Review saveReview(Review review);
     void deleteReview(Long reviewId, Long userId);
     ReviewDTO updateReview(Long id, ReviewDTO dto,  Authentication authentication);

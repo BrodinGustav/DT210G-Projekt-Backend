@@ -1,5 +1,6 @@
 package DT210G_Projekt.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +123,12 @@ public class ReviewController {
         reviewService.updateReview(id, reviewDto, authentication);
         return ResponseEntity.ok(reviewDto);
     }
+    
+@GetMapping("/user/{userId}")
+public ResponseEntity<List<ReviewDTO>> getReviewsByUser(@PathVariable String userId) {
+    List<ReviewDTO> reviews = reviewService.getReviewsByUser(userId);
+    return ResponseEntity.ok(reviews);
+}
+
 
 }
