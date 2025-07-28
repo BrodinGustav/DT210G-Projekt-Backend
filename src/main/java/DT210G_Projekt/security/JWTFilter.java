@@ -1,7 +1,5 @@
 package DT210G_Projekt.security;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

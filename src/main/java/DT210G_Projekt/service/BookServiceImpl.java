@@ -16,7 +16,6 @@ public class BookServiceImpl implements BookService {
 
     private final RestTemplate restTemplate;
 
-    // Constructor-injektion – bäst för testbarhet
     public BookServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

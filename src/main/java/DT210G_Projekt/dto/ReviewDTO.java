@@ -1,14 +1,13 @@
 package DT210G_Projekt.dto;
 
 public class ReviewDTO {
-    private Long id; 
+    private Long id;
     private String bookId;
     private int rating;
     private String comment;
     private Long userId;
     private String userEmail;
- 
-
+    
     public ReviewDTO(Long id, String bookId, int rating, String comment, Long userId, String userEmail) {
         this.id = id;
         this.bookId = bookId;
@@ -18,7 +17,7 @@ public class ReviewDTO {
         this.userEmail = userEmail;
     }
 
-       public ReviewDTO(){
+    public ReviewDTO() {
     }
 
     public String getUserEmail() {
@@ -29,7 +28,7 @@ public class ReviewDTO {
         this.userEmail = userEmail;
     }
 
-         public Long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -37,48 +36,46 @@ public class ReviewDTO {
         this.userId = userId;
     }
 
-       public String getBookId() {
-           return bookId;
-       }
+    public String getBookId() {
+        return bookId;
+    }
 
-       public void setBookId(String bookId) {
-           this.bookId = bookId;
-       }
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
 
-       public int getRating() {
-           return rating;
-       }
+    public int getRating() {
+        return rating;
+    }
 
-       public void setRating(int rating) {
-           this.rating = rating;
-       }
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
-       public String getComment() {
-           return comment;
-       }
+    public String getComment() {
+        return comment;
+    }
 
-       public void setComment(String comment) {
-           this.comment = comment;
-       }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-       public Long getId() {
-           return id;
-       }
+    public Long getId() {
+        return id;
+    }
 
-       public void setId(Long id) {
-           this.id = id;
-       }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  /*    public String getUserEmail() {
-        return userEmail;
-       }
-
-       public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-       }
-*/
-
+    /*
+     * public String getUserEmail() {
+     * return userEmail;
+     * }
+     * 
+     * public void setUserEmail(String userEmail) {
+     * this.userEmail = userEmail;
+     * }
+     */
 
 }
-
-
